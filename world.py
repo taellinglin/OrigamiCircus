@@ -50,8 +50,8 @@ class World:
                 x = start + j * step
                 y = start + i * step
                 vertex.addData3f(x, y, -1)
-                u = (x - start) / (end - start) * 128
-                v = (y - start) / (end - start) * 128
+                u = (x - start) / (end - start) * 256
+                v = (y - start) / (end - start) * 256
                 texcoord.addData2f(u, v)
 
         # Generate triangles for the grid
