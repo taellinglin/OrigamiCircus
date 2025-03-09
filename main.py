@@ -9,6 +9,8 @@ from audio3d import Audio3D
 import random
 from sfx import SoundEmitter
 from bgm import BGM
+from motionBlur import MotionBlur
+from sword import Sword
 class AnimationApp(ShowBase):
     def __init__(self):
         super().__init__()
@@ -25,12 +27,18 @@ class AnimationApp(ShowBase):
         self.world = World(self.render, self.bullet_world)
         self.lighting = Lighting(self.render)
         self.player = Player(self.render, self.bullet_world, None)
-        self.camera = Camera(self.render, self.player)
+        self.sword_left = Sword(self.bullet_world)
+        self.sword_right = Sword(self.bullet_world)
         
+        self.sword_left.equip(self.player, "CC_Base_L_Hand")  
+        self.sword_right.equip(self.player, "CC_Base_R_Hand")       
+             
+        self.camera = Camera(self.render, self.player)
         # Set up controls
         self.controls = Controls(self.player)
         #self.audio3d = Audio3D()
         self.bgm = BGM(1)
+        #self.motion_blur = MotionBlur(self.render2d, self.player.actor, self.world.floor_np)
         # Ensure portal_sounds is a list (instead of set)
         #self.portal_sounds = list(self.audio3d.sfx3d["portal_loop"])  # Assuming it's a set, convert it to a list
 
@@ -61,7 +69,6 @@ class AnimationApp(ShowBase):
         # Step physics and update game state
         self.physics.step_physics(globalClock.get_dt())
         self.camera.update_camera(task)
-        self.player.update(task)
 
         # Update sounds for the lights
         for light, sound_emitter in zip(self.player.lights, self.light_sounds):

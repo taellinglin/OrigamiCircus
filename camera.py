@@ -1,5 +1,4 @@
-from panda3d.core import Point3
-from panda3d.core import AudioManager
+from panda3d.core import Point3, BitMask32
 
 class Camera:
     def __init__(self, render, player):
@@ -13,11 +12,10 @@ class Camera:
         base.camera.set_pos(0, -5, 3)
         base.camera.look_at(0, 0, 1)
 
-        
+
     def update_camera(self, task):
         actor_pos = self.player.actor_rb.get_pos()
         self.camera_pivot.set_pos(actor_pos)
 
-        # Update the listener position as the camera moves
 
         return task.cont

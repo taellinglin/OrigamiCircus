@@ -1,7 +1,7 @@
 # world.py
 import os
 import random
-from panda3d.core import GeomVertexFormat, GeomVertexData, Geom, GeomNode, GeomTriangles, GeomVertexWriter
+from panda3d.core import GeomVertexFormat, GeomVertexData, Geom, GeomNode, GeomTriangles, GeomVertexWriter, BitMask32
 from panda3d.bullet import BulletWorld, BulletPlaneShape, BulletRigidBodyNode
 from panda3d.core import Vec3
 
@@ -14,7 +14,7 @@ class World:
 
     def setup_world(self):
         # Setup Bullet physics world
-        self.bullet_world.setGravity(Vec3(0, 0, -9.81))
+        self.bullet_world.setGravity(Vec3(0, 0, -32))
 
         # Procedurally generate the ground mesh and setup floor collision
         self.create_ground()
@@ -70,6 +70,7 @@ class World:
         node = GeomNode("ground")
         node.addGeom(geom)
         self.ground_np = self.render.attach_new_node(node)
+        #self.ground_np.set_bin("background", 0)
         # Get all the texture files from the ./checkerboards/ directory
         texture_dir = './checkerboards/'
         texture_files = [f for f in os.listdir(texture_dir) if f.endswith('.png')]

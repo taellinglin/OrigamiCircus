@@ -1,6 +1,7 @@
 # controls.py
 from gamepadInput import GamepadInput
-from panda3d.core import InputDevice
+from panda3d.core import InputDevice, Vec3
+
 class Controls:
     def __init__(self, player):
         self.player = player
@@ -34,16 +35,18 @@ class Controls:
         """
         Called when the face A button is pressed.
         """
-        self.player.play_animation('witch_talk', 300)
+        print("Pressed A")
+        self.player.jump()
+        # Set the flag when talking animation is triggered, if needed
+        self.player.is_talking = True  
 
     def update(self, task):
         """
         Update function to be called every frame.
-        In addition to the event-based input, we poll the gamepad's axis values directly.
+        In addition to event-based input, we poll the gamepad's axis values directly.
         """
-        # Check if a gamepad is connected
         if self.gamepad_input.gamepad is not None:
-            # Poll the left analog stick axes; adjust axis indices if needed
+            # Poll the left analog stick axes; adjust axis indices if needed.
             left_x = self.gamepad_input.gamepad.findAxis(InputDevice.Axis.left_x)
             left_y = self.gamepad_input.gamepad.findAxis(InputDevice.Axis.left_y)
             self.player.on_gamepad_move(0, left_x.value)
